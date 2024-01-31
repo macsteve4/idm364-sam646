@@ -1,6 +1,11 @@
 <script>
 	import Header from '$lib/header.svelte';
+	import Footer from '$lib/footer.svelte';
+	import Banner from '$lib/banner.svelte';
+	import Categories from '$lib/categories.svelte';
 </script>
 <Header/>
-<h1>I love mulch!</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to stand with the #mulchgang.</p>
+<Banner/>
+<h1 class="opener"><b>Ramen Flavors</b></h1>
+<Categories/>
+<Footer/>

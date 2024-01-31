@@ -1,0 +1,26 @@
+<div class="listing-box">
+    <div class="ramenListings">
+        <p>this is where i plug into firebase...</p>
+    </div>
+    </div>
+
+<style>
+    .listing-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 50px;
+}
+
+.ramenListings {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    max-width: 1175px;
+
+  }
+</style>
