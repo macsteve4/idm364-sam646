@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Rationale&family=Saira+Condensed:wght@400;600&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #fbfbfb;
+    }
+
+/* I need to get this into the _app.svelte so I can pull this globally... /* 

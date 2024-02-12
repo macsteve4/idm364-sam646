@@ -4,11 +4,13 @@
     <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
     <ul class="menu">
         <li><a href="/admin">ADMIN</a></li>
-        <li><a href="/cart"><img src="https://i.imgur.com/gZHcF58.png" alt="shopping cart" class="cart"></a></li>
+        <li><a href="/view-order"><img src="https://i.imgur.com/gZHcF58.png" alt="shopping cart" class="cart"></a></li>
     </ul>
 </header>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Rationale&family=Saira+Condensed:wght@400;600&display=swap');
+
     .header {
     position: absolute;
     z-index: 1;
@@ -40,14 +42,14 @@
 }
 
 ul {
-    font-family: 'Yanone Kaffeesatz', sans-serif;
-    font-size: 13px;
+    font-family: 'Saira Condensed', sans-serif;
+    font-size: 19px;
     max-width: 550px;
     line-height: 30px;
 }
 
 img.cart {
-    width: 40px;
+    width: 36px;
 }
 
 /* navigation here */
