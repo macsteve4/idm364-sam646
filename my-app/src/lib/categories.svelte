@@ -1,6 +1,15 @@
+<script>
+    import { noodles } from "./data";
+	import Ramencard from "./ramencard.svelte";
+    const listings = noodles;
+
+</script>
+
 <div class="listing-box">
     <div class="ramenListings">
-        <p>this is where i plug into firebase...</p>
+        {#each listings as {name, spice, price, image}}
+        <Ramencard name={name} spice={spice} price={price} image={image} />
+        {/each}
     </div>
     </div>
 

@@ -19,6 +19,8 @@
     }
 
     .errortext1 {
+        margin-top: 22px;
+		margin-bottom: 22px;
 		text-align: center;
 		color: rgb(190, 35, 35);
         font-family: 'Saira Condensed', sans-serif;
