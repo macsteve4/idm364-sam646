@@ -3,8 +3,8 @@
     <input class="menu-btn" type="checkbox" id="menu-btn">
     <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
     <ul class="menu">
-        <li><a href="/admin">ADMIN</a></li>
-        <li><a href="/view-order"><img src="https://i.imgur.com/gZHcF58.png" alt="shopping cart" class="cart"></a></li>
+        <li><a href="/api">API</a></li>
+        <li><a href="/cart"><img src="https://i.imgur.com/gZHcF58.png" alt="shopping cart" class="cart"></a></li>
     </ul>
 </header>
 

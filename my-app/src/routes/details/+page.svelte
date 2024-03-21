@@ -1,27 +1,101 @@
 <script>
-	import Banner from "$lib/banner.svelte";
+
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
+  import { supabase } from '$lib/supabase';
+  import { get } from 'svelte/store';
+  import { cart } from '$lib/cartStore.js';
+
+  let count = 1;
+
+  let noodleDetails = {};
+
+  onMount(async () => {
+    const queryParams = get(page).url.searchParams;
+    const productId = queryParams.get('id');
+    const { data, error } = await supabase
+      .from('noodles')
+      .select('*')
+      .eq('id', productId)
+      .single();
+
+    if (error) {
+      console.error('Error fetching noodle details:', error);
+    } else {
+      noodleDetails = data;
+    }
+  });
+  function formatPrice(price) {
+    const numericPrice = parseInt(price, 10);
+    let formattedPrice = numericPrice.toString();
+    formattedPrice = formattedPrice.slice(0, -2) + "." + formattedPrice.slice(-2);
+    return `$${formattedPrice}`;
+  }
+
+  function addToCart() {
+    cart.update(items => {
+      const productToAdd = {
+        flavor: noodleDetails.flavor,
+        price: noodleDetails.price,
+        image: noodleDetails.image,
+        quantity: count,
+        id: noodleDetails.id,
+      };
+      return [...items, productToAdd];
+    });
+  }
+
+  function decrementCount() {
+    if (count > 1) {
+      count--;
+    }
+  }
+
+  function incrementCount() {
+    count++;
+  }
 
 </script>
-<Banner />
-        <h1 class="opener">View Flavor</h1>
-        <div class="holderofitemholder">
-        <div class="itemholder">
-      <div class="imageside">
-            <img class="itemthing" src="https://i.imgur.com/4Cz0Wov.jpeg" alt= "Sample" />
-        </div>
-        <div class="deetside">
-          <h2 class="ramenitemName">Sample</h2>
-          <p class="ramenitemSpice">🔥 Sample</p>
-          <h3 class="ramenitemPrice">Sample</h3>
-          <button class="btnitem">ADD TO CART</button>
-          <button class='backitem'>Back</button>
 
+<h1 class="opener">Item View</h1>
+
+{#if noodleDetails}
+  <div class="holderofitemholder">
+    <div class="itemholder">
+      <div class="imageside">
+      <img class="itemthing" src="{noodleDetails.image}" alt={noodleDetails.flavor} />
+      </div>
+      <div class= "deetside">
+      <h2 class="ramenitemName">{noodleDetails.flavor}</h2>
+      <p class="ramenitemSpice">🔥 {noodleDetails.spice}</p>
+      <h3 class="ramenitemPrice">{formatPrice(noodleDetails.price)}</h3>
+      <div class="countermabob">
+        <button class="minus" on:click={decrementCount} on:keydown={(e) => {if (e.key === 'Enter') decrementCount()}}>-</button>
+            <p class="ramenitemSpice"> {count} </p>
+            <button class="plus" on:click={incrementCount} on:keydown={(e) => {if (e.key === 'Enter') incrementCount()}}>+</button>
+
+      </div>
+          <button class="btnitem" on:click={addToCart}> Add to Cart </button>
+          <button class="action"><a class="back" href="/"> BACK </button>
           </div>
-        </div>
-        </div>
+          </div>
+          </div>
+  
+{:else}
+  <p>Loading noodle details...</p>
+{/if}
 
 <style>
-    .holderofitemholder {
+
+.opener {
+		margin-top: 22px;
+		margin-bottom: 22px;
+		text-align: center;
+		color: rgb(190, 35, 35);
+        font-family: 'Saira Condensed', sans-serif;
+	}
+
+  .holderofitemholder {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -65,16 +139,15 @@ img.itemthing {
     margin-bottom: 5px;
 }
 
-.btnitem a {
-    text-decoration: none;
-    text-transform: uppercase;
-    display: inline-block;
-    color: #F7F7F7;
-    width: 100%;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    letter-spacing: 0.3rem;
-  }
+.deetside {
+  text-align: center;
+}
+
+.countermabob {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+    }
   
  .btnitem {
   margin: 10px 0;
@@ -87,7 +160,7 @@ img.itemthing {
   font-family: 'Saira Condensed', sans-serif;
 }
 
-  button.btnitem {
+button.btnitem {
     text-decoration: none;
     border: none;
     text-transform: uppercase;
@@ -100,41 +173,67 @@ img.itemthing {
     cursor: pointer;
   }
   
-  button.btnitem a::after {
-    content: "";
-    width: 50%;
-    height: 700%;
-    background: #F7F7F7;
-    position: absolute;
-    transform: skewX(-40deg);
-    top: -250px;
-    left: -65px;
-    transition: 0.2s;
-    opacity: 0.3;
-  }
-  
-  button.btnitem:hover a::after {
-    top: 42px;
-    left: 170px;
-    transition: 0.2s;
-  }
-  
-  button.btnitem:active {
+button.btnitem:active {
     background: #12151A;
   }
 
-  button.backitem {
+button.action {
+        margin-top: 26px;
+        margin-bottom: 26px;
+        background: #222831;
+        position: relative;
+        overflow: hidden;
+        color: white;
+        text-align: center;
+        padding: 8px 10px;
+        font-size: 1.25rem;
+        font-family: 'Saira Condensed', sans-serif;
+        border: none;
+        max-height: 48px;
+        letter-spacing: 0.3rem;
+      }
+      
+button.plus {
     margin-top: 16px;
-    margin-bottom: 26px;
+    margin-bottom: 16px;
     background: #222831;
     position: relative;
     overflow: hidden;
+    color: white;
     text-align: center;
+    padding: 0px 6px;
     font-size: 1.25rem;
     font-family: 'Saira Condensed', sans-serif;
     border: none;
     max-height: 48px;
-  }
+    cursor: pointer;
+}
+
+button.minus {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background: #222831;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    padding: 0px 7.75px;
+    font-size: 1.25rem;
+    font-family: 'Saira Condensed', sans-serif;
+    border: none;
+    max-height: 48px;
+    cursor: pointer;
+}
+
+a.back {
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    display: inline-block;
+    color: #F7F7F7;
+    width: 100%;
+    cursor: pointer;
+  } 
 
   @media (min-width: 768px) {
 
@@ -165,18 +264,61 @@ img.itemthing {
         cursor: pointer;
       }
 
-      button.backitem {
+      button.action {
         margin-top: 26px;
         margin-bottom: 0px;
         background: #222831;
         position: relative;
         overflow: hidden;
+        color: white;
         text-align: center;
+        padding: 8px 10px;
         font-size: 1.25rem;
         font-family: 'Saira Condensed', sans-serif;
         border: none;
         max-height: 48px;
+        letter-spacing: 0.3rem;
       }
+
+      button.plus {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background: #222831;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    padding: 0px 6px;
+    font-size: 1.25rem;
+    font-family: 'Saira Condensed', sans-serif;
+    border: none;
+    max-height: 48px;
+}
+
+button.minus {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background: #222831;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    padding: 0px 7.75px;
+    font-size: 1.25rem;
+    font-family: 'Saira Condensed', sans-serif;
+    border: none;
+    max-height: 48px;
+}
+
+  a.back {
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    display: inline-block;
+    color: #F7F7F7;
+    width: 100%;
+    cursor: pointer;
+  } 
 
       .ramenitemName {
         font-family: 'Saira Condensed', sans-serif;
@@ -187,4 +329,5 @@ img.itemthing {
     }
 
   } 
+
 </style>
