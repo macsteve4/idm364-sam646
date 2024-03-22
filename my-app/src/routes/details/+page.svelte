@@ -186,6 +186,8 @@ button.action {
         color: white;
         text-align: center;
         padding: 8px 10px;
+        padding-left: 12px;
+        padding-right: 10px;
         font-size: 1.25rem;
         font-family: 'Saira Condensed', sans-serif;
         border: none;
@@ -276,6 +278,8 @@ a.back {
         color: white;
         text-align: center;
         padding: 8px 10px;
+        padding-left: 12px;
+        padding-right: 10px;
         font-size: 1.25rem;
         font-family: 'Saira Condensed', sans-serif;
         border: none;

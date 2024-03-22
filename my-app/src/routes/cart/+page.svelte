@@ -4,6 +4,11 @@
     import Modal from '$lib/popup.svelte';
 
     let showModal = false;
+    let subtotal = 0;
+
+    $: {
+        subtotal = $cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    }
 
     function clearCart() {
     cart.set([]);
@@ -68,16 +73,21 @@
         <button class="delete" on:click={() => cart.update(items => items.filter(i => i !== item))}>DELETE</button>
         </div>
     </div>
-</div>        
+</div>    
 {/each}
 {:else}
 <img class="messageimg" src="https://i.imgur.com/13uABbU.png" alt="empty bowl, you have an empty cart!" width="195" height="188">
-<p class="messagetext">Your cart is empty...</p>
+<p class="messagetext">Seems empty...</p>
 {/if}
 <div class="actionareaholder">
+    {#if subtotal > 0}
+    <h2 class="saleTotal">Total: {formatPrice(subtotal)}</h2>
+    {/if}
     <div class="actionarea">
         <button class="action"><a class="back" href="/">BACK</button>
+        {#if subtotal > 0}
         <button class="action" on:click={checkout}>CHECKOUT</button>
+        {/if}
     </div>
 </div>
 
@@ -97,7 +107,7 @@
 	text-align: center;
 	color: rgb(190, 35, 35);
     font-family: 'Saira Condensed', sans-serif;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
 }
 
 .ramencheckout {
@@ -160,6 +170,8 @@ button.action {
     color: white;
     text-align: center;
     padding: 8px 10px;
+    padding-left: 12px;
+    padding-right: 10px;
     font-size: 1.25rem;
     font-family: 'Saira Condensed', sans-serif;
     border: none;
@@ -249,6 +261,13 @@ a.back {
     align-items: center;
     display: flex;
     flex-direction: column;
+}
+
+h2.saleTotal {
+    font-family: 'Saira Condensed', sans-serif;
+    margin-top: 16px;
+    margin-bottom: 5px;
+    margin-left: 185px;
 }
 
 </style>
