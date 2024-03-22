@@ -125,6 +125,7 @@
 
 img.cartitem {
     max-width: 60px;
+    border: 1px solid #eadfc9;
 }
 
 .quantitymodder {

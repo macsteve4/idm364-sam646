@@ -242,7 +242,10 @@ a.back {
         flex-direction: row;
         justify-content: space-between;
         min-width: 746px;
+        border-top: 1px solid #dfdfdf;
+        border-left: 1px solid #e9e9e9;
         background-color: #ffe0e0;
+        box-shadow: inset 0 -5px 0 0 #ffc7c7;
         filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.04));
         
     }

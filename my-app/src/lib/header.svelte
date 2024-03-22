@@ -22,6 +22,7 @@
     color: #333;
     font-weight: bold;
     font-size: 19px;
+    text-align: center;
 }
 
 .header .logo {
@@ -29,7 +30,7 @@
     float: left;
     font-size: 2em;
     padding: 10px 10px;
-    width: 150px;
+    width: 100px;
 }
 
 .header ul {
@@ -125,6 +126,7 @@ img.cart {
 
   li {
     float: none;
+    background-color: #ffecbcf2;
 }
 
 @media (min-width: 768px) {
@@ -149,6 +151,7 @@ img.cart {
 
   li {
     float: left;
+    background: none;
 }
 }
 
