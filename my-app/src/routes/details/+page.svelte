@@ -96,7 +96,7 @@
           <button class="btnitem" on:click={addToCart}> Add to Cart </button>
           {#if noodlesAddedToCart}
             <div class="messageToCart">
-              <p>Noodles added to cart!</p>
+              <p class="messagetext">Added to cart!</p>
             </div>
           {/if}
           <button class="action"><a class="back" href="/"> BACK </button>
@@ -364,8 +364,7 @@ button.minus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #222831;
-    color: #ffffff;
+    background-color: #fefefe;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     z-index: 1000;
@@ -373,5 +372,14 @@ button.minus {
     text-align: center;
     width: 200px;
     font-family: 'Saira Condensed', sans-serif;
+    border: 1px solid #bbbbbb;
   }
+
+  .messagetext {
+	  text-align: center;
+	  color: rgb(190, 35, 35);
+    font-family: 'Saira Condensed', sans-serif;
+    font-size: 1.8rem;
+  }
+
 </style>
