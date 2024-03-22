@@ -13,6 +13,7 @@
     position: absolute;
     z-index: 1;
     width: -webkit-fill-available;
+    width: -moz-available;
 }
 
 .header li a {
