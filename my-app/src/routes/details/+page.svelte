@@ -32,18 +32,36 @@
     return `$${formattedPrice}`;
   }
 
+  let noodlesAddedToCart = false;
+
   function addToCart() {
     cart.update(items => {
-      const productToAdd = {
-        flavor: noodleDetails.flavor,
-        price: noodleDetails.price,
-        image: noodleDetails.image,
-        quantity: count,
-        id: noodleDetails.id,
-      };
-      return [...items, productToAdd];
+      const existingItemIndex = items.findIndex(item => item.id === noodleDetails.id);
+      if (existingItemIndex !== -1) {
+          let newItems = [...items];
+          newItems[existingItemIndex] = {
+            ...newItems[existingItemIndex],
+            quantity: newItems[existingItemIndex].quantity + count
+          };
+          return newItems;
+      } else {
+        const productToAdd = {
+          flavor: noodleDetails.flavor,
+          price: noodleDetails.price,
+          image: noodleDetails.image,
+          quantity: count,
+          id: noodleDetails.id,
+        };
+        return [...items, productToAdd];
+      }
     });
+    noodlesAddedToCart = true;
+
+    setTimeout(() => {
+      noodlesAddedToCart = false;
+    }, 2000);
   }
+
 
   function decrementCount() {
     if (count > 1) {
@@ -76,6 +94,11 @@
 
       </div>
           <button class="btnitem" on:click={addToCart}> Add to Cart </button>
+          {#if noodlesAddedToCart}
+            <div class="messageToCart">
+              <p>Noodles added to cart!</p>
+            </div>
+          {/if}
           <button class="action"><a class="back" href="/"> BACK </button>
           </div>
           </div>
@@ -336,5 +359,19 @@ button.minus {
     }
 
   } 
-
+  .messageToCart {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #222831;
+    color: #ffffff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 1rem;
+    text-align: center;
+    width: 200px;
+    font-family: 'Saira Condensed', sans-serif;
+  }
 </style>
